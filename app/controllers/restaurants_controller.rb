@@ -1,31 +1,18 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show edit update destroy chef]
 
-  # GET /restaurants
   def index
     @restaurants = Restaurant.all
   end
 
-  def top
-    @restaurants = Restaurant.where(stars: 5)
-  end
+  def show
+    @review = Review.new
+   end
 
-  def chef
-    @chef = @restaurant.chef_name
-  end
-
-  # GET /restaurants/1
-  def show; end
-
-  # GET /restaurants/new
   def new
     @restaurant = Restaurant.new
   end
 
-  # GET /restaurants/1/edit
-  def edit; end
-
-  # POST /restaurants
   def create
     @restaurant = Restaurant.new(restaurant_params)
 
@@ -34,21 +21,6 @@ class RestaurantsController < ApplicationController
     else
       render :new
     end
-  end
-
-  # PATCH/PUT /restaurants/1
-  def update
-    if @restaurant.update(restaurant_params)
-      redirect_to @restaurant, notice: 'Restaurant was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  # DELETE /restaurants/1
-  def destroy
-    @restaurant.destroy
-    redirect_to restaurants_url, notice: 'Restaurant was successfully destroyed.'
   end
 
   private

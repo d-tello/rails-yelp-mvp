@@ -1,6 +1,37 @@
-<h1><%= @restaurant.name %></h1>
-<p><%= @restaurant.address %></p>
-<p><%= @restaurant.phone_number %></p>
-<p><%= @restaurant.category %></p>
+<h1>
+  <%= @restaurant.name %>
+</h1>
+<p>
+  <%= @restaurant.address %>
+</p>
+<p>
+  <%= @restaurant.phone_number %>
+</p>
+<p>
+  <%= @restaurant.category %>
+</p>
 
-<%= link_to 'Back', restaurants_path %>
+<h3>Reviews</h3>
+<ul class="list-group">
+  <% @restaurant.reviews.each do |review| %>
+    <li class="list-group-item">
+      <%= review.content %>
+    </li>
+  <% end %>
+</ul>
+
+
+<h2>Add a review</h2>
+<%= simple_form_for [ @restaurant, @review ] do |f| %>
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<div class="form-inputs">
+  <%= f.input :content %>
+  <%= f.input :rating %>
+</div>
+<div class="form-actions">
+  <%= f.button :submit, class: "btn btn-primary"%>
+</div>
+<% end %>
+<br>
+<%= link_to 'Back', restaurants_path, class: "btn btn-primary"%>
